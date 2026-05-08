@@ -22,15 +22,7 @@ Here is the structure of this very simple SageMath example package:
 
 To install the most recent development version:
 
-    sage -pip install --upgrade git+https://plmlab.math.cnrs.fr/sebastien.labbe/simple-sagemath-package
-
-or after cloning the repository, run this from the `simple-sagemath-package` folder:
-
-    $ sage -pip install -e .
-    ...
-    Successfully built simple_sagemath_package
-    Installing collected packages: simple_sagemath_package
-    Successfully installed simple_sagemath_package-0.1.0
+    sage -pip install --upgrade git+https://github.com/wilsoa/well_aligned_pairs
 
 ## Usage
 
