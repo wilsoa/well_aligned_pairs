@@ -77,6 +77,7 @@ class WellAlignedPair:
 
 def WellAlignedPairs (n, u = None):
 	from sage.combinat.permutation import Permutation
+	from sage.combinat.permutation import Permutations
 
 	if n == 1:
 		yield WellAlignedPair(Permutation([1]), Permutation([1]))

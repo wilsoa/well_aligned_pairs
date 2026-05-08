@@ -24,6 +24,10 @@ To install the most recent development version:
 
     sage -pip install --upgrade git+https://github.com/wilsoa/well_aligned_pairs
 
+or from within sage,
+
+`   %pip install --upgrade git+https://github.com/wilsoa/well_aligned_pairs`
+
 ## Usage
 
 Open sage:
