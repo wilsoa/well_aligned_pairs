@@ -84,37 +84,7 @@ Use it:
 
 ## Check that all tests pass in the package
 
-Check the c╔2 1 3╗
-╚2 1 3╝
-╔2 1 3╗
-╚2 3 1╝
-╔2 1 3╗
-╚3 1 2╝
-╔2 1 3╗
-╚3 2 1╝
-overage of functions in the package. To get 100% coverage, every
-function needs to be documented *and* that documentation must contain examples.
-These are called *doctests*.
-
-    $ make coverage
-    sage -coverage simple_sagemath_package/*
-    ------------------------------------------------------------------------
-    No functions in simple_sagemath_package/__init__.py
-    ------------------------------------------------------------------------
-    SCORE simple_sagemath_package/main.py: 100.0% (2 of 2)
-    ------------------------------------------------------------------------
-
-Test all doctests of the package:
-
 To do: doctests
-╔2 1 3╗
-╚2 1 3╝
-╔2 1 3╗
-╚2 3 1╝
-╔2 1 3╗
-╚3 1 2╝
-╔2 1 3╗
-╚3 2 1╝
 
 ## For more information
 
