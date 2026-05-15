@@ -75,17 +75,50 @@ class WellAlignedPair:
 	def __repr__ (self):
 		return "╔" + " ".join([str(x) for x in self._u]) + "╗\n╚" + " ".join([str(x) for x in self._v]) + "╝"
 
-def WellAlignedPairs (n, u = None):
-	from sage.combinat.permutation import Permutation
-	from sage.combinat.permutation import Permutations
 
-	if n == 1:
-		yield WellAlignedPair(Permutation([1]), Permutation([1]))
-	elif u == None:
-		for _u in Permutations(n):
-			for pair in WellAlignedPairs(n, _u):
-				yield pair
-	else:
+class WellAlignedPairs:
+	def __init__ (self, n, u = None):
+		self._n = n
+		self._u = u
+	def __iter__ (self):
+		n = self._n
+		u = self._u
+		from sage.combinat.permutation import Permutation
+		from sage.combinat.permutation import Permutations
+
+		if n == 1:
+			yield WellAlignedPair(Permutation([1]), Permutation([1]))
+		elif u == None:
+			for _u in Permutations(n):
+				for pair in WellAlignedPairs(n, _u):
+					yield pair
+		else:
+			min_index = u.index(1)
+			max_index = min_index
+
+			# Push max_index as long as u has
+			# an ascent
+			while max_index < n - 1 and u[max_index] < u[max_index + 1]:
+				max_index += 1
+
+			# Every possible v is formed by taking a well-aligned
+			# pair with (delta(u),*) with a one placed in each possible
+			# index 
+			for pair in WellAlignedPairs(n - 1, delta(u)):
+				_v = [x + 1 for x in pair[1]]
+				for index in range(min_index, max_index + 1):
+					yield WellAlignedPair(u, Permutation(_v[0:index] + [1] + _v[index:]))
+	def cardinality (self):
+		from sage.combinat.permutation import Permutations
+
+		n = self._n
+		u = self._u
+		if n == 1:
+			return 1
+		if u == None:
+			return sum([
+				WellAlignedPairs(n, u).cardinality() for u in Permutations(n)
+			])
 		min_index = u.index(1)
 		max_index = min_index
 
@@ -94,11 +127,9 @@ def WellAlignedPairs (n, u = None):
 		while max_index < n - 1 and u[max_index] < u[max_index + 1]:
 			max_index += 1
 
-		# Every possible v is formed by taking a well-aligned
-		# pair with (delta(u),*) with a one placed in each possible
-		# index 
-		for pair in WellAlignedPairs(n - 1, delta(u)):
-			_v = [x + 1 for x in pair[1]]
-			for index in range(min_index, max_index + 1):
-				yield WellAlignedPair(u, Permutation(_v[0:index] + [1] + _v[index:]))
-
+		return (max_index - min_index + 1) * WellAlignedPairs(n - 1, delta(u)).cardinality()
+	def __repr__ (self):
+		if self._u != None:
+			return f"Well-aligned pairs with first entry {self._u}"
+		else:
+			return f"Well-aligned pairs of size {self._n}"
