@@ -32,6 +32,14 @@ def is_well_aligned (u, v):
 	# that (delta(u), delta(v)) is well-aligned
 	return is_well_aligned(delta(u), delta(v))
 
+def generate_tree (u, v):
+    from sage.combinat.binary_tree import LabelledBinaryTree
+    if len(u) == 0:
+        return None
+    pivot = u.index(max(u))
+    
+    return LabelledBinaryTree([generate_tree(u[0:pivot],v[0:pivot]),generate_tree(u[pivot+1:],v[pivot+1:])],label=(u[pivot],v[pivot]))
+
 
 class WellAlignedPair:
 	def __init__ (self, u, v, verify = True):
@@ -74,6 +82,9 @@ class WellAlignedPair:
 
 	def __repr__ (self):
 		return "╔" + " ".join([str(x) for x in self._u]) + "╗\n╚" + " ".join([str(x) for x in self._v]) + "╝"
+        
+	def binary_tree (self):
+		return generate_tree(self._u, self._v)
 
 
 class WellAlignedPairs:
